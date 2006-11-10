@@ -1,0 +1,9 @@
+PPT2Latex
+
+Autor: Marco Aurélio Graciotto Silva <magsilva@gmail.com>
+
+Este script em Visual Basic for Applications foi desenvolvido para converter
+apresentações feitas no PowerPoint para um pseudo-Latex. Atualmente ele
+suporta a conversão de textos (título, subtítulo, corpo), tabelas, figuras e
+vídeos, dentro ou não de 'placeholders'. O código é simples e claro.
+Atualmente ele não gera um arquivo Latex 100% correto mas já uma grande ajuda.
