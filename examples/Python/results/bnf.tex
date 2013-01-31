@@ -1,0 +1,38 @@
+\chapter{Forma Extendida de Backus-Naur}
+
+A gramática no formato EBNF (Extended Backus-Naur Form) é uma gramática livre de contexto. Ela é  composta por um conjunto de regras, cada qual identificada por um símbolo não-terminal. Cada regra gera um conjunto de símbolos de acordo com a parte direita da produção (uma expressão booleana). Esse conjunto de símobolos podem ser terminais ou não. Os terminais serão os colocados entre aspas duplas. Os não-terminais são os símbolos restantes.
+
+
+Fecho de Kleene: Indicado com os parênteses. Se com sufixo *, repete 0 ou mais vezes. Se com sufixo +, repete 1 ou mais vezes.
+
+Colchetes ao redor de uma expressão indicam que a mesma pode ou não existir (em outras palavras, é opcional).
+
+O símbolo | corresponde ao operador "ou".
+
+Vejamos um exemplo de uma gramática para expressões matemáticas para números inteiros):
+
+\begin{codigo}
+	digito	::= "0"..."9"
+	magnitude	::= "+" | "-"
+	numero	::= [magnitude](digito)+
+	operação	::= "+" | "-" | “/” | “*”
+	expressão	::= numero ( operação expressão )*
+\end{codigo}
+
+Em linguagem natural, poderíamos dizer:
+\begin{itemize}
+	\item Um digito é algo com a letra 0, 1, 2, 3, 4, 5, 6, 7, 8 ou 9.
+	\item Magnitude pode ser positiva ou negativa.
+	\item Um número é algo com uma magnitude e um ou mais dígitos.
+	\item Um operação é + ou – ou / ou *.
+	\item ma expressão é composta por um número, pelo menos. Além disto, pode ter um ou mais conjuntos de operação e uma expressão.
+\end{itemize}
+
+Exemplos de palavras reconhecidas/geradas pela gramática acima:
+
+\begin{codigo}
+	-3
+	3 + -9
+	3 + 3 - -2
+	0 + 4 - 1 + 14
+\end{codigo}

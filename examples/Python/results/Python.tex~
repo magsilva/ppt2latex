@@ -1,0 +1,2611 @@
+% Presentation compiled from a PowerPoint to LaTeX by ExportToLatex (v.0.2.0)
+% ExportToLatex is a weekend hack product by Marco Aurélio Graciotto Silva <magsilva@icmc.usp.br>
+
+% Source powerpoint file: E:\magsilva\pae\aulas\Python.ppt
+% Title: Python
+% Subject: Tutorial sobre Python
+% Author: Marco Aurélio Graciotto Silva
+% Creation date: 11/2/2003 16:54:08
+% Last modification date: 10/1/2004 15:55:55
+
+% Programação Orientada a Objetos, SCE-213, ICMC-USP
+
+\documentclass[a4paper,oneside,12pt]{article}
+
+\usepackage[latin1]{inputenc}
+
+
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{pdfborder={0 0 0}}
+
+\title{Python}
+\author{Marco Aurélio Graciotto Silva}
+
+\begin{document}
+
+
+\chapter{Introdução}
+
+O Python é uma linguagem de programação livre\footnote{http://www.opensource.org/licenses/PythonSoftFoundation.php} criada em 1989 por Guido van Rossum. Ela foi originalmente desenvolvida para facilitar a administração de sistemas baseados no  Amoeba\footnome{O Amoeba é um sistema operacional distribuído de propósito geral desenvolvido pela Vrije Universiteit. Ele pode ser encontrado em http://www.cs.vu.nl/pub/amoeba/} no \textit{National Research Institute for Mathematics and Computer Science}, Holanda. O intuito era criar uma linguagem de script que permitisse utilizar chamadas de sistema facilmente, algo impossível a partir do Bourne Shell (a ferramenta até então disponível).
+
+A linguagem Python inspirou-se em algumas características das linguagens ABC e Modula-3:
+
+\begin{itemize}
+	\item Tipos de dados de alto nível (ABC);
+	\item Indentação como método para delimitar contexto (ABC);
+	\item Sintaxe e semântica do mecanismo de exceções (Módula-3).
+\end{itemize}
+
+\begin{curiosidade}
+A respeito do nome Python, ele foi utilizado em homenagem ao famoso programa de comédia "Monty Python's Flying Circus" mostrado na BBC de 5/10/1969 a 5/12/1974. Uma boa referência sobre esse programa é o site \href{http://bau2.uibk.ac.at/sg/python/monty.html}.
+\end{curiosidade}
+
+
+\subsection{Motivação}
+
+O Python é uma linguagem fácil de aprender e de se empregar no mundo real. Atualmente é utilizada por várias empresas e organizações de relevância: Yahoo, Google, Nasa. Consulte a página http://www.python.org/psa/Users.html para maiores detalhes.
+
+O principal motivo para ela ser utilizada nesta disciplina, claro, é o fato dela ser orientada a objetos.
+
+
+\subsection{Características}
+
+As principais características do Python são:
+
+\begin{itemize}
+	\item Orientada a objetos.
+	\item Interpretada.
+	\item Tipagem dinâmica.
+	\item Criação dinâmica de tipos.
+	\item Interativa.
+	\item Multiplataforma.
+	\item Biblioteca padrão com vários recursos.
+	\item Pode ser utilizada como linguagem de programação ou de script (ao gosto do freguês).
+\end{itemize}
+
+A característica de multiplataforma advém principalmente do fato de ser uma linguagem interpretada, necessitando apenas da adaptação da “máquina virtual” Python para a plataforma desejada. Atualmente são oficialmente suportadas as seguintes plataformas: diversos sistemas Unix (Solaris, HP-UX), Linux, Windows, DOS, MacOS. Além disso, existem ports não-oficiais\footnote{A maioria desses ports são para versões relativamente antigas do Python (geralmente 1.5.2).} para WinCE, PalmOS, Windows NT (arquitetura Alpha), DOS, OS/2, AmigaOS, VMS, BeOS, OS/400, Epoc, QNX, VxWorks, Playstation 2, OS390/ZOS, RISC OS (Acorn), AROS.
+
+% VxWorks é um sistema operacional para sistemas embarcados
+% Epoc é o sistema operacional dos handhelds Psion
+% OS/400 é o SO dos IBM iSerie (vulgo AS/400)
+% RISC OS (ex-Acorn) é um SO para arquiteturas baseadas em StrongARM.
+% OS390/ZOS é o SO dos mainframes IBM
+% AROS é um sistema operacional que tenta ser compatível ao AmigaOS 3.1 mas melhora em algumas áreas.
+
+Assim como todas as implementações de linguagens atuais, o Python possui uma vasta biblioteca padrão, suportando XYZ.
+
+Uma característica de linguagem de script dela é que Python é muito fácil de embutir em programas (ao contrário de Java e C/C++).
+
+As características de	orientação a objetos, interpretada, tipagem dinâmica, criação dinâmica de tipos e interatividade talvez sejam melhores demonstradas com exemplos.
+
+Executem o python (interativamente):
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[scale=1,height=80,width=678]{figure0}
+	\label{figure0}
+\end{figure}
+
+“>>>” é o prompt, indica que o interpretador está pronto para receber comandos. Para sair, utilize ^Z (Windows) ou ^D (Unix e afins). Maiores detalhes sobre esse e outros ambientes de desenvolvimento para Python, consulte o apêndice.
+
+A tipagem dinâmico é um recurso que ganhou muita popularidade nos últimos tempos. Presente em linguagens de programação desde XXXX (LISP), ela facilita o trabalho do programador, não o obrigando a declarar o tipo das variáveis do programa. Vejo o exemplo abaixo:
+
+\begin{codigo}
+	>>> a = 1
+	>>> type(a)
+	<type 'int'>
+	>>> a = “Hello World!”
+	>>> type(a)
+	<type 'str'>
+\end{codigo}
+
+Outra característica notável de Python é o controle de bloco por nível de indentação. Pode-se utilizar espaços e\footnote{O recomendável seria "`espaços"' \textbf{ou} "`tabulações"'. Misturar ambos pode resultar em problemas. Tenha em mente que o Python substitui toda tabulação por oito espaços em branco automaticamente. Execute "`python -t"' para gerar um aviso para cada uso indevido de espaços e tabulações (ou "`python -tt"' para gerar um erro e obrigar o programador a corrigir o problema)} tabulações para indentar:
+
+\begin{codigo}
+	a = -1
+	if ( a < 0 ):
+		print "Isto e' um bloco de comandos"
+		print " e 'a' e' menor que 0"
+	print "Ja' isto pertence a outro bloco de comandos"
+\end{codigo}
+
+
+O Python possui vários tipos de alto nível: inteiro, ponto flutuante, número complexo, strings, unicode, tupla, lista, dicionário:
+
+\begin{codigo}
+	a = [ “A”, 2i, u“C” ]
+	b = { "pi" : 3.14 }
+	c = ( 3, 2, 1 )
+\end{codigo}
+
+No exemplo acima, temos a declaração de três variáveis (a, b, c). A "`a"' é uma lista contendo uma string, um número complexo e um unicode. A "`b"' é um dicionário contendo um item, esse por sua vez com um string como chave e um ponto flutuante como valor. Finalmente, "`c"' é uma tupla de três números inteiros.
+
+Agora um exemplo de criação e instanciação de uma classe:
+
+\begin{codigo}
+	class HelloGuy:
+		def talk(self):
+			print “Hello World!”
+
+	guy = HelloGuy()
+	guy.talk()
+\end{codigo}
+
+Em alto nível, foi declarado uma classe "`HelloGuy"' com o método "`talk"'. A seguir, criou-se uma instância dessa classe, o "`guy"' e se enviou uma mensagem para ele falar. Mais detalhes sobre como declarar classes serão vistos no capítulo \ref{capitulo:objeto}.
+
+
+
+
+\section{Convenções léxicas e sintáticas}
+
+\subsection{Linhas físicas e lógicas}
+
+Um programa é composto por linhas lógicas. Cada uma dessas linhas lógicas pode ser composta por uma ou mais linhas físicas. No caso de uma linha física ser uma linha lógica, é trivial. Trata-se apenas de um string terminado com o retorno de carro ou nova linha, CR ou LF respectivamente, dependendo do sistema\footnote{No DOS ou Windows, utiliza-se CR LF. No Unix e afins, LF. No MacOS, CR}.
+
+Mas e quando são várias linhas físicas formando uma lógica? Tem-se então a junção implícita ou explícita de linhas. A implícita aplica-se no caso de expressões entre parênteses, colchetes ou chaves. Veja o exemplo abaixo:
+
+% TODO: Fazer uma tabela Sem junção & Juntando
+\begin{codigo}
+	message = [ "Hello",
+		"World" ]
+\end{codigo}
+
+\begin{codigo}
+	message = [ "Hello", "World" ]
+\end{codigo}
+
+A junção de linha explícita consiste no acréscimo de uma contra-barra, "\",  no final de todas as linhas (menos a última) a serem unidas. Por exemplo:
+
+% TODO: Fazer uma tabela Sem junção & Juntando
+\begin{codigo}
+	if message == "Hello World" \
+		and "Hello World" == message:
+		print message
+\end{codigo}
+
+\begin{codigo}
+	if message == "Hello World" and "Hello World" == message:
+		print message
+\end{codigo}
+
+
+\subsection{Indentação}
+
+A indentação possui um papel especial em Python: é ela que determina o início e o fim de um bloco de código.
+
+% TODO: Fazer uma tabela Codigo & Resultado
+Codigo
+\begin{codigo}
+for i in range(1,10):
+	print "Testing"
+	for j in range(1,4):
+		print j
+	print "...\n"
+print "Test successfull"
+\end{codigo}
+
+Resultado
+\begin{codigo}
+Testing
+1
+2
+3
+...
+
+Testing
+1
+2
+3
+...
+\end{codigo}
+
+Os níveis de indentação são determinados durante a análise léxica e identificados por tokens INDENT e DEDENT. Neste processo é utilizada uma pilha para armazenar os níveis de indentação, atuando-se da seguinte forma:
+
+\begin{enumerate}
+	\item Antes da primeira linha de código ser lida, um zero é empilhado. Este dado nunca mais será retirado da pilha.
+	\item No início de cada linha lógica, o nível de indentação é comparado com o número do topo da pilha. Se for igual, nada acontece. Se for maior, é empilhado no topo da pilha e se gera um token INDENT. Se for menor, desempilha-se um número, gera-se um token DEDENT e repete-se o processo.
+\end{enumerate}
+
+A importância da indentação traz a tona o velho problema do uso de espaços ou tabulações. Qual usar? Use qualquer um deles mas use apenas um deles! Evite misturar. Só para constar, cada marca de tabulação é substituída por espaços pelo Python (de um até oito espaços de maneira que o total de caracteres sejam um múltiplo de oito).
+
+
+\subsection{Convenções léxicas}
+
+Explicado do que é composto o programa , linhas lógicas, como elas são organizadas (indentação), torna-se necessário explicar qual será o conteúdo delas: identificadores, palavras-chaves, literais, etc. Serão utilizados conceitos sobre gramáticas no formato EBNF (Extended Backus-Naur Form). Caso não a conheça, olhe o apêndice.
+
+
+
+\section{Identificadores}
+
+Os identificadores, como pode ser observado logo abaixo, são sensíveis a maiúsculas/minúsculas (case sensitive).
+
+\begin{codigo}
+	identificador ::= ( letra | "_" ) ( letra | digito | "_" )*
+	letra ::= maiúscula | minúscula
+	minúscula ::= "a"..."z"
+	maiúscula ::= "A"..."Z"
+	digito ::= "0"..."9"
+\end{codigo}
+
+Além das regras acima, um identificador não pode ter o mesmo nome de uma palavra reservada.
+
+\subsection{Palavras reservadas}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline and & assert & break & class & continue & def\\
+		\hline del & elif & else & except & exec & finally\\
+		\hline for & from & global & if & import & in\\
+		\hline is & lambda & not & or & pass & print\\
+		\hline raise & return & try & while & yield & as\\
+		\hline None &  &  &  &  & \\
+		\hline	\end{tabular}
+	\label{table0}
+\end{table}
+
+Observe que "`as"' e "`None"' não são palavras reservadas atualmente (mas provavelmente o serão em futuras versões do Python).
+
+
+\subsection{Classes reservadas de identificadores}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline _* & Identificador que não é importado quando usando "from module import *".\\
+		\hline __*__ & Identificador definido pelo sistema.\\
+		\hline __* & Identificador de um atributo privado de classe.\\
+		\hline _ & Identificador que armazena o resultado do último comando executado no modo iterativo.\\
+		\hline	\end{tabular}
+	\label{table1}
+\end{table}
+
+O _ é armazenado no módulo __builtin__. Quando não no modo interativo, o _ não possui significado algum e não é definido.
+
+
+\subsection{Inteiros}
+
+Gramática:
+
+\begin{codigo}
+	numero_inteiro ::= numero_decimal | numero_octal | numero_hexadecimal
+	numero_decimal ::= decimal_semzero | "0"
+	numero_octal ::= "0" octal
+	numero_hexadecimal ::= "0" ("x" | "X") hexadecimal+
+	decimal_semzero ::= "1"..."9"
+	octal ::= "0"..."7"
+	hexadecimal ::= decimal | "a"..."f" | "A"..."F"
+\end{codigo}
+
+
+Exemplos:
+\begin{codigo}
+	7
+	3L
+	0177
+	0x137
+	0xA21C1L
+	0777l
+\end{codigo}
+
+Observação quanto aos literais de números: O sinal não faz parte do token, ele é considerado um operador.
+
+
+\subsection{Ponto flutuante}
+
+Gramática:
+\begin{codigo}
+	numero_flutuante ::= ponto_flutuante | expoente_flutuante
+	ponto_flutuante ::= [digito] fração | digito "."
+	expoente_flutuante ::= ( digito+ | ponto_flutuante ) expoente
+	fração ::= "." digito+
+	expoente ::= ( "e" | "E" ) [ "+" | "-" ] digito+
+\end{codigo}
+
+Exemplos:
+\begin{codigo}
+	1.2
+	.0
+	3.14e-10
+	0e0
+	10.
+	1e100
+\end{codigo}
+
+
+\subsection{Número imaginário}
+
+O valor qualificado com j se refere a parte imaginaria.
+
+Gramática:
+\begin{codigo}
+	numero_imaginário ::= ( numero_flutuante | digito+ ) ( "j" | "J" )
+\end{codigo}
+
+Exemplos:
+\begin{codigo}
+	3.14j
+	10.j
+	10j
+	.001j
+	1.e100j
+	3.14e-10j
+\end{codigo}
+
+
+\subsection{Strings}
+
+Cadeia de caracteres imutáveis.
+
+Podem ser delimitadas por aspas duplas ou simples:
+
+\begin{itemize}
+	\item Se delimitadas por aspas simples, as aspas duplas que porventura contenha serão mostradas.
+	\item Se delimitadas por aspas duplas, as aspas simples que porventura contenha serão mostradas.
+\end{itemize}
+
+
+\begin{codigo}
+	>>> print "Teste simples"
+	Teste simples
+
+	>>> print “O ‘a’ é artigo definido.”
+	O ‘a’ é artigo definido.
+
+	>> print ‘O “um” é artigo indefinido.”
+	O “um” é artigo indefinido.
+\end{codigo}
+	
+
+Para definir uma string com múltiplas linhas e preservando a formatação, pode-se usar três aspas duplas consecutivas como delimitadores:
+
+\begin{codigo}
+"""Este texto
+	aparecerá
+		exatamente
+	deste horrível jeito"""
+\end{codigo}
+
+
+Caracteres especiais (seqüências de escape) (\n, \t, etc) também podem ser utilizados:
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline \b & Backspace\\
+		\hline \n & Nova página\\
+		\hline \r & Retorno de carro\\
+		\hline \uxxxx & Caracter Unicode (valor de 16 bits  em  hexadecimal)\\
+		\hline \t & Tabulação\\
+		\hline	\end{tabular}
+	\label{table2}
+\end{table}
+
+
+Strings podem possuir alguns modificadores antes de sua definição:
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline u & Indica que será uma string codificada em Unicode\\
+		\hline r & Indica que será uma string sem codificação em especial (raw)\\
+		\hline	\end{tabular}
+	\label{table3}
+\end{table}
+
+\begin{codigo}
+>>> string_unicode = u"\tTeste\u0020123"
+>>> string_raw = r"\tTeste\u0020123"
+>>> print string_unicode, string_raw
+	Teste 123 \tTeste\u0020123
+\end{codigo}
+
+
+\subsection{Tuplas}
+
+Tuplas são uma seqüência imutável.
+
+Utiliza o operador parênteses para definí-la.
+
+\begin{codigo}
+>>> tupla1 = ( "Yo", 6.5 )
+>>> tupla2 = ( 3.1, 95, "Marco", tupla1 )
+>>> tupla3 = ( tupla1, tupla2, "teste" )
+>>> print tupla1
+('Yo', 6.5)
+>>> print tupla2
+(3.1000000000000001, 95, 'Marco', ('Yo', 6.5))
+>>> print tupla3
+(('Yo', 6.5), (3.1000000000000001, 95, 'Marco', ('Yo', 6.5)), 'teste')
+\end{codigo}
+
+
+\subsection{Acessando itens de uma tupla}
+
+Os elementos podem ser acessados utilizando o colchetes ([]). Os índices são números inteiros, tendo o primeiro elemento o índice zero. Eles também podem ser negativos:
+
+\begin{codigo}
+>>> tupla1 = ( "Yo", 6.5 )
+>>> tupla2 = ( 3.1, 95, "Marco", tupla1 )
+
+>>> print tupla1[0]
+Yo
+>>> print tupla2[3]
+('Yo', 6.5)
+>>> print tupla2[-1]
+('Yo', 6.5)
+\end{codigo}
+
+Também podem ser uma fatia (slice) da tupla:
+
+\begin{codigo}
+>>> print tupla2[1:3]
+(95, 'Marco')
+>>> print tupla2[-1:0]
+()
+
+>>> print tupla2[2:]
+('Marco', ('Yo', 6.5))
+>>> print tupla2[:2]
+(3.1000000000000001, 95)
+\end{codigo}
+
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[scale=1,height=408,width=408]{figure0}
+	\label{figure0}
+\end{figure}
+
+Basta imaginar que a tupla é circular. Testem usando o alfabeto (incluindo K, W e Y).
+
+% a = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+
+\section{Listas}
+
+Podem conter qualquer tipo de objeto (inclusive outra lista).
+
+Seu conteúdo é definido entre colchetes:
+
+\begin{codigo}
+>>> lista1 = [ "Yo", 6.5 ]
+>>> lista2 = [ 3.1, 95, "Marco", lista1 ]
+>>> lista3 = [ lista1, lista2, "teste" ]
+>>> print lista1
+['Yo', 6.5]
+>>> print lista2
+[3.1000000000000001, 95, 'Marco', ['Yo', 6.5]]
+>>> print lista3
+[['Yo', 6.5], [3.1000000000000001, 95, 'Marco', ['Yo', 6.5]], 'teste']
+\end{codigo}
+
+\subsection{Dicionários}
+
+Definem conjuntos finitos de objetos indexados por um conjunto de índice arbitrário.
+
+Definido através da delimitação com uso de chaves. 
+
+A chave (índice) é separado do respectivo valor através do uso do símbolo ":". Cada item é separado por ",".
+
+\begin{codigo}
+exemplo = { 50 : "media" , "aluno1" : "Caramuru" }
+\end{codigo}
+
+
+
+% ----------------------------------------------------------
+% Slide 7 (Slide60)
+
+\section{Operadores}
+
+\subsection{Operações aritméticas}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline x + y & Soma\\
+		\hline x - y & Subtração\\
+		\hline x * y & Produto\\
+		\hline x / y & Divisão\\
+		\hline x % y & Módulo\\
+		\hline -x & Negação\\
+		\hline +x & (não modifica em nada)\\
+		\hline abs(x) & Valor absoluto\\
+		\hline int(x) & Converte para inteiro\\
+		\hline long(x) & Converte para inteiro longo\\
+		\hline float(x) & Converte para ponto flutuante\\
+		\hline complex(x,y) & Converte para número complexo (real, imaginários)\\
+		\hline x.conjungate() & Conjulgado do número complexo\\
+		\hline divmod(x,y) & Divisão e módulo\\
+		\hline pow(x,y) & Potenciação\\
+		\hline x ** y & Potenciação\\
+		\hline	\end{tabular}
+	\label{table0}
+\end{table}
+
+Não existem garantias quanto a conversão de pontos flutuantes para inteiro (truncar ou arredondar). Para conversões com regras bem estabelecidas, usar as funções ceil() e floor() do módulo math.
+
+
+\subsection{Operações bit-stream}
+
+Outras operações possíveis em números inteiros:
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline x | y & or\\
+		\hline x ^ y & xor \\
+		\hline x & y & and\\
+		\hline x << n & shift left\\
+		\hline x >> n & shift right\\
+		\hline ~x & not\\
+		\hline	\end{tabular}
+	\label{table1}
+\end{table}
+
+Deslocamentos negativos geram uma exceção "ValueError".
+
+
+\subsection{Operador de substituição (%)}
+
+O operador de substituição funciona de maneira parecida com o printf() em C.
+
+Ou seja, escreve-se a string normalmente, mas usando um dos símbolos precedidos por % no lugar do espaço a ser preenchido.
+
+Ao final da string, adiciona-se o símbolo "%" seguido dos valores a substituir. Se mais de uma substituição, delimitam-se os valores com parênteses e os separa com vírgulas.
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline Caracteres & Tipo\\
+		\hline %% & -\\
+		\hline %c & \\
+		\hline %d & Inteiro\\
+		\hline %ld & Inteiro longo\\
+		\hline %i & Inteiro\\
+		\hline %x & Inteiro\\
+		\hline %f & Ponto flutuante\\
+		\hline %s & Strings\\
+		\hline %p & Ponteiro\\
+		\hline	\end{tabular}
+	\label{table2}
+\end{table}
+
+Pode-se formatar o conteúdo sendo substituído. 
+
+Por exemplo, para mostrar um inteiro com dois dígitos, use %2d. 
+
+Para mostrar um número de ponto flutuante com quatro casas decimais, use %.4f.
+
+Exemplos:
+
+\begin{codigo}
+>> print "Fornecedor: %s, custo %f" % ( "hungry.com", 40.30 )
+Fornecedor: hungry.com, custo 40.300000
+
+>>> print "Quantidade de 'Hello World's no texto: %d" % 10
+Quantidade de 'Hello World's no texto: 10
+\end{codigo}
+
+
+\subsection{Operadores condicionais}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline > & Maior que\\
+		\hline < & Menor que\\
+		\hline >= & Maior ou igual a\\
+		\hline <= & Maior ou igual a\\
+		\hline == & Igual (valor)\\
+		\hline != & Diferente\\
+		\hline <> & Diferente\\
+		\hline  is & Igual (identidade)\\
+		\hline in & Está presente em\\
+		\hline	\end{tabular}
+	\label{table3}
+\end{table}
+
+% Sim, existem dois operadores para a mesma operação.
+% Operador "in": verifica a presença de um elemento em uma lista
+
+O valor sendo testado será falso se for:
+\begin{itemize}
+	\item zero (0);
+	\item lista, dicionário, tupla ou string vazios, de tamanho zero;
+	\item o valor especial None (que significa nulo)
+\end{itemize}
+
+Caso contrário, o valor será verdadeiro.
+
+
+Exemplos:
+\begin{codigo}
+>>> "x" in "bule"
+0
+
+>>> 1 < 0
+0
+
+>>> 0 == 0
+1
+
+>>> 0 <> "Hello World"
+1
+\end{codigo}
+
+
+\subsection{Operadores lógicos}
+
+Os testes condicionais acima expostos podem ainda ser modificados através do uso do operadores lógicos "and", "or" e "not". Por exemplo:
+
+\begin{codigo}
+>>> nome = "Pedro"
+>>> idade = 24
+>>> nome == "Pedro" and idade == 25
+0
+>>> nome == "Pedro" and not idade == 25
+1
+>>> nome == "Pedro" or idade == 25
+1
+\end{codigo}
+
+\section{Resumo dos Operadores}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline + & - & * & ** & /\\
+		\hline // & % & << & >> & &\\
+		\hline | & ^ & ~ & < & >\\
+		\hline <= & >= & == & != & <>\\
+		\hline	\end{tabular}
+	\label{table4}
+\end{table}
+
+
+% =	Atribuição
+% +	Adição
+% -	Subtração
+% /	Divisão inteira
+% %	Resto de divisão inteira
+% *	Multiplicação
+% **	Exponenciação
+% %	Substituição
+
+
+
+\subsection{Delimitadores}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline ' & " & # & \\\
+		\hline	\end{tabular}
+	\label{table7}
+\end{table}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline ( & ) & [ & ] & { & }\\
+		\hline , & : & . & ´ & = & ;\\
+		\hline += & -= & *= & /= & //= & %=\\
+		\hline &= & |= & ^= & >>= & <<= & **=\\
+		\hline	\end{tabular}
+	\label{table8}
+\end{table}
+
+
+
+% ----------------------------------------------------------
+% Slide 21 (Slide132)
+
+\section{Comentário}
+
+Os comentários são precedidos do caracter # (desde que este caracter não seja parte de um literal).
+
+Todo o texto da linha encontrado após este símbolo será ignorado.
+
+O comentário também significa o final de uma linha lógica (menos no caso de junção implícita de linhas).
+
+print "Teste" # Teste simples
+teste = [ 'teste1',  # Comentario 1
+	    'teste2' ] # Comentario 2
+
+
+
+% ----------------------------------------------------------
+% Slide 22 (Slide118)
+
+\section{Expressões}
+
+
+
+
+% ----------------------------------------------------------
+% Slide 23 (Slide142)
+
+\section{Expressões}
+
+Aritmética mista: se os operadores forem de tipos numéricos diferentes, o operador com "menor" tipo será convertido o outro.
+
+Inteiro normal
+Inteiro longo
+Ponto flutuante
+Número complexo
+
+
+
+
+Python fully supports mixed arithmetic: when a binary arithmetic operator has operands of different numeric types, the operand with the ``smaller'' type is converted to that of the other, where plain integer is smaller than long integer is smaller than floating point is smaller than complex. Comparisons between numbers of mixed type use the same rule.2.6 The functions int(), long(), float(), and complex() can be used to coerce numbers to a specific type.   
+
+
+% ----------------------------------------------------------
+% Slide 24 (Slide86)
+
+\section{Literal "lambda"}
+
+Vejam o exemplo abaixo:
+
+>>> func = lambda (x) : x * 2
+>>> func(3)
+6
+
+Funcionalmente, isto seria equivalente a:
+
+>>> def func(x):
+...	return x * 2
+>>> func(3)
+6
+
+
+
+% ----------------------------------------------------------
+% Slide 25 (Slide87)
+
+\section{Literal "lambda"}
+
+Mas, afinal, o que o lambda é? Ele define uma função anônima?
+
+Não. O lambda, na verdade, é uma expressão "lambda x: expressão em x". O valor da dela é que é uma função "expressão em x"
+
+
+
+% ----------------------------------------------------------
+% Slide 26 (Slide88)
+
+\section{Lambda}
+
+E qual a utilidade do lambda?
+
+Geralmente é utilizado para passar uma função para alguma função sem ter que dar uma nome para a função. Por exemplo:
+
+>>> print map(lambda x: x+x, [1,2,3])
+[2, 4, 6]
+
+
+
+% ----------------------------------------------------------
+% Slide 27 (Slide119)
+
+\section{Operações aritméticas}
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline x + y & Soma\\
+		\hline x - y & Subtração\\
+		\hline x * y & Produto\\
+		\hline x / y & Divisão\\
+		\hline x % y & Módulo (deprecated no Python 2.3)\\
+		\hline -x & Negação\\
+		\hline +x & (não modifica em nada)\\
+		\hline abs(x) & Valor absoluto\\
+		\hline int(x) & Converte para inteiro\\
+		\hline long(x) & Converte para inteiro longo\\
+		\hline float(x) & Converte para ponto flutuante\\
+		\hline complex(x,y) & Converte para número complexo (real, imaginários)\\
+		\hline x.conjungate() & Conjulgado do número complexo\\
+		\hline divmod(x,y) & Divisão e módulo (deprecated no Python 2.3)\\
+		\hline pow(x,y) & Potenciação\\
+		\hline x ** y & Potenciação\\
+		\hline	\end{tabular}
+	\label{table9}
+\end{table}
+
+
+
+Não existem garantias quanto a conversão de pontos flutuantes para inteiro (truncar ou arredondar). Para conversões com regras bem estabelecidas, usar as funções ceil() e floor() do módulo math.
+
+% ----------------------------------------------------------
+% Slide 28 (Slide143)
+
+\section{Operações bit-stream}
+
+Outras operações possíveis em números inteiros:
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline x | y & or\\
+		\hline x ^ y & xor \\
+		\hline x & y & and\\
+		\hline x << n & shift left\\
+		\hline x >> n & shift right\\
+		\hline ~x & not\\
+		\hline	\end{tabular}
+	\label{table10}
+\end{table}
+
+
+Deslocamentos negativos geram uma exceção "ValueError".
+
+% ----------------------------------------------------------
+% Slide 29 (Slide145)
+
+\section{Operações de seqüências}
+
+As operações abaixo são suportadas por seqüências:
+
+\begin{table}[hbt]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline x in s & Contém\\
+		\hline x not in s & Não contém\\
+		\hline s + t & Concatenação\\
+		\hline s * n, n * s & n cópias de s concatenadas\\
+		\hline s[i] & i-ésimo elemento\\
+		\hline s[i:j] & Elementos da fatia especificada\\
+		\hline len(s) & Tamanho da seqüência\\
+		\hline max(s) & Maior elemento da seqüência\\
+		\hline min(s) & Menor elemento da seqüência\\
+		\hline	\end{tabular}
+	\label{table11}
+\end{table}
+
+
+
+% ----------------------------------------------------------
+% Slide 30 (Slide146)
+
+\section{Operações de dicionários}
+
+ 
+
+
+
+% ----------------------------------------------------------
+% Slide 31 (Slide117)
+
+\section{Mecanismos para controle de fluxo}
+
+
+
+
+% ----------------------------------------------------------
+% Slide 32 (Slide82)
+
+\section{Mecanismos de controle de fluxo}
+
+Para controlar o fluxo das operações, Python provê três mecanismos: if, while e for.
+
+"if" expressão ":"
+	...
+( "elif" expressão ":"
+	... )*
+["else" ":"
+	...]
+
+"while" expressão ":"
+	...
+[ "else"
+	... ]
+
+"for" objeto "in " lista ":"
+	...
+[ "else"
+	... ]
+
+
+
+% ----------------------------------------------------------
+% Slide 33 (Slide153)
+
+\section{if ... elif ... else}
+
+Executa no máximo um dos conjuntos de comandos especificados.
+
+Avalia as expressões uma a uma até que seja encontrada uma que seja verdadeira.
+
+Se não for encontrada uma verdadeira, executa a cláusula do "else" (se ela existir)
+
+
+
+% ----------------------------------------------------------
+% Slide 34 (Slide154)
+
+\section{if ... elif ... else}
+
+Um exemplo:
+
+message = "Hello World!"
+if message == "Hello":
+	print 1
+elif message == "World":
+	print 2
+elif message == "Hello World":
+	print 4
+else:
+	print message
+
+
+
+% ----------------------------------------------------------
+% Slide 35 (Slide155)
+
+\section{while ... else}
+
+Testa a expressão e repete os comandos enquanto a mesma for verdadeira.
+
+Quando a expressão for avaliada como falsa, a cláusula "else" será executada (se existir).
+
+a = 5
+while a > 0:
+	print "Hello World"
+	a -= 1 
+else:
+	print a
+
+
+
+% ----------------------------------------------------------
+% Slide 36 (Slide156)
+
+\section{for ... else}
+
+Percorre os elementos da seqüência especificada (string, tupla, lista, etc) ou de algum objeto iterável (container com iterador), executando os comandos para cada elemento encontrado.
+
+Executa a cláusula "else" após iterar sobre todos os elementos da lista.
+
+for i in range(1,10):
+	print i
+else:
+	print i
+
+
+
+% ----------------------------------------------------------
+% Slide 37 (Slide157)
+
+\section{break e continue}
+
+No for e while, o break termina o loop atual (não executa a cláusula "else").
+
+Já o continue executa a próxima iteração do loop (e, se não existir próxima iteração, executa a cláusula else.
+
+for n in range(2, 10):
+	for x in range(2, n):
+		if n % x == 0:
+			print n, "igual a", x, '*', n/x
+			break
+		else:
+			print n, "primo" 
+
+
+Exemplo tomado do Python Tutorial (http://www.python.org/doc/current/tut/node6.html). Calcula números primos entre 2 e 9.
+
+% ----------------------------------------------------------
+% Slide 38 (Slide120)
+
+\section{Funções}
+
+
+
+
+% ----------------------------------------------------------
+% Slide 39 (Slide121)
+
+\section{Função                                                     }
+
+Sintaxe para dara definir um objeto do tipo function:
+
+"def" identificador "(" [ lista_parâmetros ] ")" ":"
+	...
+
+Por exemplo: 
+
+def say_message( message ):
+	print message
+
+def say_messages( message_sequence ) :
+	for message in message_sequence:
+		say_message( message )
+
+
+
+% ----------------------------------------------------------
+% Slide 40 (Slide158)
+
+\section{Função - Parâmetros}
+
+É possível especificar um valor default para os parâmetros da função. 
+
+>>> def say_messages( message_sequence = ["Hello",
+						      "World" ] ) :
+	for message in message_sequence:
+		say_message( message )
+
+>>> say_messages()
+Hello
+World
+>>> say_messages( [ "Not", "this", "time" ] )
+Not
+this
+time
+
+
+
+% ----------------------------------------------------------
+% Slide 41 (Slide159)
+
+\section{Função - Parâmetros}
+
+Detalhando um pouco, um parâmetro é da forma:
+
+parâmetro ::= identificador [ "=" expressão ]
+
+E daí cabe a imaginação do programador que expressão será utilizada.
+
+Mas, um detalhe: a expressão é resolvida quando a definição é executada. Logo:
+
+def teste( a = ( b + c ) ):
+	print a
+
+só funcionará se b e c estiverem previamente definidos.
+
+
+Observação: Mas nada impede o usuário de ficar redefinindo a função... :-)
+
+% ----------------------------------------------------------
+% Slide 42 (Slide160)
+
+\section{Função - Parâmetros}
+
+Mais uma peculiaridade de funções em Python: parâmetros adicionais (extras, além do normal).
+
+lista_parâmetros ::=
+	( parâmetro "," )* (
+		"*" identificador [ , "**" identificador ]
+		| "**" identificador
+		| parametro [ "," ]
+	)
+
+Afinal, que são estes *identificador, **identificador?
+
+
+
+% ----------------------------------------------------------
+% Slide 43 (Slide161)
+
+\section{Funções  - Parâmetros}
+
+O *identificador é inicializado com uma tupla com os parâmetros em excesso.
+
+O **identificador é inicializado com um dicionário recebendo os argumentos em excesso.
+
+def print_messages( *messages_tuple ):
+	for message in messages_tuple:
+		print message
+
+
+
+% ----------------------------------------------------------
+% Slide 44 (Slide162)
+
+\section{Modelo de execução}
+
+
+
+
+% ----------------------------------------------------------
+% Slide 45 (Slide40)
+
+\section{Relacionamento objeto - nome}
+
+Os objetos são relacionados com nomes (name binding). Este mapeamento nome-objeto é denominado espaço de nomes (namespace).
+
+A ocorrência de um nome no programa se refere a um relacionamento estabelecido no bloco mais interno que contém o uso.
+
+Blocos de código são pedaços de programas Python executados como uma unidade. São blocos: módulo, corpo de função e definição de classe.
+
+
+
+% ----------------------------------------------------------
+% Slide 46 (Slide41)
+
+\section{Exemplos de bloco de código}
+
+Exemplos de blocos de código:
+
+ arquivo de script;
+ comando de script (um comando especificado quando executado o python com a opção -c;
+ arquivo lido através da função execfile();
+ cada comando digitado no modo interativo;
+ etc...
+
+
+Os etc são:
+- string passada como argumento através da função eval() e do comando exec()
+- expressão lida e avaliada través da função input()
+
+% ----------------------------------------------------------
+% Slide 47 (Slide163)
+
+\section{Escopo}
+
+O escopo é uma região textual de um programa Python na qual um espaço de nome é diretamente acessível.
+
+Uma variável definida em um bloco  de função tem seu escopo estendido para qualquer bloco interno do bloco na qual a variável foi definida (a menos que ela seja redefinida num deles).
+
+O escopo de nomes definidos em um bloco de classe é limitado ao bloco em questão, não se propagando para os blocos dos métodos.
+
+
+Diretamente acessível: uma referência sem qualificador especial permite o acesso ao nome.
+
+% ----------------------------------------------------------
+% Slide 48 (Slide164)
+
+\section{Resolução de escopo}
+
+Quando um nome é usado em bloco de código, utiliza-se o escopo interno mais próximo.
+
+Se um nome não é encontrado neste escopo mais interno, procura-se no escopo do módulo. E se não for encontrado neste, procura-se no escopo global.
+
+O conjunto de todos estes escopos visíveis para um bloco de código é chamado de ambiente do bloco.
+
+
+
+% ----------------------------------------------------------
+% Slide 49 (Slide44)
+
+\section{Variáveis}
+
+Um nome ligado a um bloco é uma variável local daquele bloco.
+
+Um nome ligado a um bloco de módulo é uma variável global (locais do ponto de vista do módulo e globais para os blocos de corpo de função).
+
+Se uma variável é usada em um bloco de código mas não é definida nele, trata-se de uma variável livre.
+
+
+Variável livre significa que ela não é definida localmente.
+
+http://www.gvu.gatech.edu/ccg/people/rob/software/closure.html
+a closure 'closes' the free variables. in the above example the free variable (with respect to inner_foo) are call_count and c. being a free variable means that they are not locally defined. (note that if this were like C, the variables c, and call_count would be allocated on the stack and would go away when the call returns. but since this is a psuedolanguage...they stay around. in lisp and scheme, they would be allocated on the heap and a garbage collector would take care of them). 
+
+% ----------------------------------------------------------
+% Slide 50 (Slide151)
+
+\section{Variável global}
+
+O comando "global" identifica uma lista de nomes como pertencendo ao espaço de nomes global.
+
+count = 0
+def say_hello_and_count():
+	global count
+	count += 1
+	print "Hello World (%d)" % count
+print "'Hello world' was said %d times" % count
+	
+
+
+
+% ----------------------------------------------------------
+% Slide 51 (Slide152)
+
+\section{Variável global}
+
+Na verdade, não existe mistério. Dentro da função é outro espaço de nome. Observe o exemplo abaixo:
+
+>>> a = 42
+>>> def foo():
+	a = 13
+>>> foo()
+>>> print a
+42
+
+O 'a' declarado na função não é o mesmo 'a' declarado no escopo anterior.
+
+
+Exemplo retirado do livro Python Essential Reference, segunda edição.
+
+% ----------------------------------------------------------
+% Slide 52 (Slide42)
+
+\section{Execution Frame}
+
+Cada bloco é executado em um execution frame.
+
+Este "quadro de execução" serve para:
+armazenar informações administrativas (utilizadas para depuração);
+determinar onde e como a execução continua após a execução do bloco terminar.
+
+
+
+% ----------------------------------------------------------
+% Slide 53 (Slide116)
+
+\section{Orientação a Objetos}
+
+
+
+
+% ----------------------------------------------------------
+% Slide 54 (Slide33)
+
+\section{Python e Objetos}
+
+Tudo em Python é um objeto:
+
+Números inteiros e ponto flutuante
+Strings
+Dicionários
+Tuplas
+Listas
+...
+
+
+
+% ----------------------------------------------------------
+% Slide 55 (Slide34)
+
+\section{Python e Objetos}
+
+Todo objeto possui:
+ uma identidade
+ um tipo
+ um valor
+
+Identidade, na implementação atual, corresponde ao endereço do objeto.
+
+Identidade pode ser verificada com o método id().
+Tipo pode ser verificado com o método type().
+
+
+
+% ----------------------------------------------------------
+% Slide 56 (Slide101)
+
+\section{Python e Objetos}
+
+Logo, durante todo este tempo, criamos objeto sem sequer darmos-nos conta disto.
+
+a = 1
+print "Teste 123"
+a = "Abacaxi"
+
+Ok, mas como destruir estes objetos? Ou eles ficam infinitamente na memória?
+
+
+
+% ----------------------------------------------------------
+% Slide 57 (Slide102)
+
+\section{Máquina Virtual}
+
+Como dito anteriormente, Python é interpretada.
+
+Mas interpretação depende do ponto de vista.
+
+Na verdade, todo o código que digitamos é convertido em instruções nativas para uma máquina virtual Python.
+
+
+Será a Máquina Virtual Python realmente uma máquina virtual? Java garante a homogeneidade, inteiros são sempre de valor 32 bits, algo que não é necessariamente verdade em Python. 
+
+http://manatee.mojam.com/pyvmwiki/
+http://www.python.org/doc/current/lib/bytecodes.html
+
+% ----------------------------------------------------------
+% Slide 58 (Slide103)
+
+\section{Máquina Virtual}
+
+E esta máquina virtual, claro, gerencia a memória. Por isto que não precisamos nos preocupar com alocação/desalocação de memória.
+
+A alocação é transparente e a desalocação garantida por meio de um coletor de lixo.
+
+
+
+% ----------------------------------------------------------
+% Slide 59 (Slide104)
+
+\section{Máquina Virtual}
+
+Mas como funciona o coletor de lixo da PyVM (Python Virtual Machine)?
+
+Todo objeto, além de um valor e um tipo, também tem um contador de referências.
+
+Quando este contador chega a zero, significa que o objeto não está sendo utilizado (ou, mesmo que quisesse, não poderia ser, não temos mais o endereço dele).
+
+
+
+% ----------------------------------------------------------
+% Slide 60 (Slide105)
+
+\section{Máquina Virtual}
+
+E, se ninguém mais vai utilizá-lo, não tem porque ele permanecer em memória.
+
+Logo, o coletor de lixo o pega e retira da memória.
+
+Isto facilita, e muito, o gerenciamento de memória. Não existe mais a preocupação em liberar a memória utilizada (ao menos não diretamente).
+
+
+
+% ----------------------------------------------------------
+% Slide 61 (Slide35)
+
+\section{Mutabilidade}
+
+Quanto a mutabilidade, dependendo do tipo, os objetos em Python podem ser mutáveis ou imutáveis:
+
+Mutáveis: Objetos que podem ter seu valor alterado (do tipo listas e dicionários)
+
+Imutáveis: Objetos que não podem ter seu valor alterado (do tipo números, tuplas e strings)
+
+
+
+% ----------------------------------------------------------
+% Slide 62 (Slide36)
+
+\section{Classificação de Objetos e algumas conseqüências - 1/2}
+
+Operações realizadas em objetos imutáveis que computem novos valores podem retornar uma referência para um objeto com o mesmo tipo e valor.
+
+>>> a = 1; b = 1
+>>> id(a)
+7692256
+>>> id(b)
+7692256
+
+
+
+% ----------------------------------------------------------
+% Slide 63 (Slide37)
+
+\section{Classificação de Objetos e algumas conseqüências - 2/2}
+
+Claro, isto não ocorre com objetos mutáveis:
+
+>>> c = []; d = []
+>>> id(c)
+11122672
+>>> id(d)
+11121648
+
+Mas tome cuidado com as declarações:
+
+11121648
+>>> e = f = []
+>>> id(e)
+11168896
+>>> id(f)
+11168896
+
+
+
+
+
+% ----------------------------------------------------------
+% Slide 64 (Slide125)
+
+Object
+
+None
+Number
+Sequence
+Mapping
+Not Implemented
+Callable Type
+Ellipsis
+Module
+Internal type
+File
+
+Integer
+Float point
+Complex number
+
+Immutable sequence
+MutableSequence
+
+Dictionary
+
+User-defined function
+User-defined method
+Generator function
+Built-in function
+Built-in method
+Class
+Class instance
+
+Code object
+Frame object
+Traceback object
+Slice object
+
+Plain integer
+Long integer
+
+Strings
+Unicode
+Tuple
+
+List
+
+
+
+
+
+
+
+
+
+
+Hierarquia de Tipos
+
+
+Também existe o tipo "Type", que inclusive pode ser herdado.
+
+% ----------------------------------------------------------
+% Slide 65 (Slide133)
+
+\section{None}
+
+Tem um único valor.
+
+Só existe um objeto com valor None.
+
+Seu valor verdade é "false".
+
+def  teste():
+	return None
+a = None
+if  not teste() and not a:
+	print "Falso"
+id(a)
+id(None)
+
+
+
+% ----------------------------------------------------------
+% Slide 66 (Slide134)
+
+\section{NotImplemented}
+
+Possui um único valor.
+
+Só existe um objeto com este valor!
+
+Utilizado para indicar que uma determinada operação não é suportada.
+
+Seu valor verdade é "true".
+
+
+O "NotImplemented" é utilizado em comparações ricas (?) e métodos numéricos.
+
+% ----------------------------------------------------------
+% Slide 67 (Slide135)
+
+\section{Ellipsis}
+
+Possui um único valor.
+
+Só existe um objeto com este valor.
+
+Utilizado para indicar a presença de "..." em um "slice".
+
+Seu valor verdade é "true".
+
+
+
+% ----------------------------------------------------------
+% Slide 68 (Slide136)
+
+\section{Number}
+
+Criado por literais numéricos e retornado como resultado de operadores matemáticos e funções aritméticas.
+
+São imutáveis.
+
+Existem três subtipos: Integer, Float e Complex.
+
+
+
+% ----------------------------------------------------------
+% Slide 69 (Slide138)
+
+\section{Integer (int e long)}
+
+Divididos entre inteiros e inteiros longos:
+Inteiros: 32 ou 64 bits (dependente da plataforma)
+Inteiros longos: depende da memória disponível
+
+Pode-se imaginar sempre como inteiro longo, o Python se encarrega de alternar de inteiro para inteiro longo se necessário.
+
+
+
+% ----------------------------------------------------------
+% Slide 70 (Slide137)
+
+\section{Float (float)}
+
+Precisão dupla.
+
+Depende da arquitetura da máquina sobre a qual a PyVM está rodando (e da implementação utilizada).
+
+
+Números com ponto flutuante são sempre de precisão dupla por acreditar-se que, devido ao "overhead" do ponteiro e tipo do objeto, a economia de memória não se justifica. 
+
+Mas alguém poderia argumentar que o cálculo com precisão simples é mais rápido. Bom, isto não é sempre verdade, depende muito da arquitetura em questão.
+http://www.cs.swarthmore.edu/~sproul/cs23/lab2/fpVsInt.html
+
+
+% ----------------------------------------------------------
+% Slide 71 (Slide139)
+
+\section{Complex Number (complex)}
+
+Os números complexos são representados por um par de números de ponto flutuante.
+
+A parte real e imaginária podem ser obtidas através dos métodos real e imag.
+
+
+
+% ----------------------------------------------------------
+% Slide 72 (Slide140)
+
+\section{Sequence}
+
+Representam conjuntos finitos ordenados indexados por números não negativos.
+
+São distinguidas de acordo com sua mutabilidade:
+Imutáveis: Strings, Unicode e Tuplas.
+Mutáveis: Listas.
+
+
+
+% ----------------------------------------------------------
+% Slide 73 (Slide13)
+
+\section{String (str)}
+
+Os itens de uma string são caracteres (que não são um tipo separado, são representados como strings de um item).
+
+
+
+% ----------------------------------------------------------
+% Slide 74 (Slide20)
+
+\section{Tuple (tuple)}
+
+Utiliza o operador parênteses para definí-la.
+
+Seus índices são números inteiros (tendo o primeiro elemento da tupla o índice zero)
+
+
+t = ( 1, 3, “Teste” )
+print t[2]
+
+
+
+% ----------------------------------------------------------
+% Slide 75 (Slide18)
+
+\section{List (list)}
+
+Podem conter qualquer tipo de objeto (inclusive outra lista).
+
+Seu conteúdo é definido entre colchetes:
+
+>>> lista1 = [ "Yo", 6.5 ]
+>>> lista2 = [ 3.1, 95, "Marco", lista1 ]
+>>> lista3 = [ lista1, lista2, "teste" ]
+>>> print lista1
+['Yo', 6.5]
+>>> print lista2
+[3.1000000000000001, 95, 'Marco', ['Yo', 6.5]]
+>>> print lista3
+[['Yo', 6.5], [3.1000000000000001, 95, 'Marco', ['Yo', 6.5]], 'teste']
+
+
+
+% ----------------------------------------------------------
+% Slide 76 (Slide127)
+
+\section{Utilizando seqüências}
+
+Os elementos podem ser acessados utilizando o operador colchetes ([]). 
+
+Os índices são números inteiros, tendo o primeiro elemento o índice zero.
+
+>>> print lista1[0]
+Yo
+>>> print lista2[3]
+['Yo', 6.5]
+>>> print lista3[1]
+[3.1000000000000001, 95, 'Marco', ['Yo', 6.5]]
+>>> 
+
+
+
+% ----------------------------------------------------------
+% Slide 77 (Slide19)
+
+\section{Utilizando seqüências}
+
+Os índices podem ser negativos (pegando os itens de trás para frente):
+
+>>> print lista2[3]
+['Yo', 6.5]
+>>> print lista2[-1]
+['Yo', 6.5]
+
+Também podem ser uma fatia (slice) da lista:
+
+>>> print lista2[1:3]
+[95, 'Marco']
+>>> print lista2[-1:0]
+[]
+
+>>> print lista2[2:]
+['Marco', ['Yo', 6.5]]
+>>> print lista2[:2]
+[3.1000000000000001, 95]
+
+
+
+% ----------------------------------------------------------
+% Slide 78 (Slide128)
+
+\section{Utilizando seqüências}
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[scale=1,height=408,width=408]{figure0}
+	\label{figure0}
+\end{figure}
+
+Basta imaginar que a lista é circular
+
+Testem usando o alfabeto (incluindo K, W e Y)
+
+
+a = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+% ----------------------------------------------------------
+% Slide 79 (Slide148)
+
+\section{Mapeamentos (dict)}
+
+Definem conjuntos finitos de objetos indexados por um conjunto de índice arbitrário.
+
+Atualmente só existe um objeto deste tipo: dicionários.
+
+
+
+% ----------------------------------------------------------
+% Slide 80 (Slide21)
+
+\section{Dicionários}
+
+Funcionalmente parecido com listas mas utiliza objetos arbitrários como índice.
+
+Definido através da delimitação com uso de chaves. 
+
+A chave (índice) é separado do respectivo valor através do uso do símbolo ":". Cada item é separado por ",".
+
+exemplo = { 50 : "media" , "aluno1" : "Caramuru" }
+
+
+
+% ----------------------------------------------------------
+% Slide 81 (Slide150)
+
+\section{Novos tipos}
+
+Mas trabalhar somente com este tipos é insuficiente, como criar novos tipos ou criar algo que extenda a capacidade dos atuais?
+
+Podemos extender isto através de objetos Class!
+
+
+
+% ----------------------------------------------------------
+% Slide 82 (Slide39)
+
+\section{Classe}
+
+Os objetos "Class" são criados através da definição de uma classe:
+
+class HelloWorld(object):
+	pass
+
+a = HelloWorld()
+
+E criar um objeto desta classe recém-definida, basta algo como:
+
+Parece com uma chamada de função. Se a classe aceitar parâmetros em sua criação, então o código seria:
+
+a = HelloWorld( arg1, arg2, arg3, ...., argn)
+
+
+
+% ----------------------------------------------------------
+% Slide 83 (Slide167)
+
+\section{Classe - Definição de métodos}
+
+Os métodos de uma classe são definidos através de "def" (que nem funções).
+
+class HelloSpeaker(object):
+	def say_something(self):
+		print "Hello World"
+
+Observe que todo método deve conter um argumento (que será uma referência para a classe a que o método se refere).
+
+
+Chamar o argumento de self é apenas uma conveniência para ajudar a lembrar de que o primeiro argumento é o objeto a partir do qual o método está sendo chamado.
+
+% Why must 'self' be used explicitly in method definitions and calls? The idea was borrowed from Modula-3. It turns out to be very useful, for a variety of reasons.
+
+Uma outra observação: todos os métodos de uma classe Python são o que em C++ chamamos de virtuais.
+
+% ----------------------------------------------------------
+% Slide 84 (Slide166)
+
+\section{Classe - Detalhes sobre métodos}
+
+Classes são blocos de código, logo o corpo da classe pode conter código arbitrário.
+
+a = 1
+class A(object):
+	if ( a == 1 ):
+		def say_something(self):
+			print "Hello"
+
+Observe que se o 'a' for alterado, por exemplo, para zero depois de definir a classe, o método 'say_something()' continuará existindo (afinal, a classe já foi definida).
+
+
+
+% ----------------------------------------------------------
+% Slide 85 (Slide45)
+
+\section{Definição de métodos da classe}
+
+Os métodos de uma classe podem ser públicos ou privados.
+
+Para definir um método privado, acrescente o prefixo "__" (dois underscore) ao nome do método.
+
+Qualquer outro método que não inicie com "__" é público.
+
+class Telescope:
+	def __calculate_aberration(self)
+	def is_good(self)
+
+
+Não existem métodos protegidos ou amigos em Python.
+
+% ----------------------------------------------------------
+% Slide 86 (Slide46)
+
+\section{Métodos públicos e privados}
+
+Mas em que isto implica?
+
+Métodos privados não podem ser chamados a partir de objetos de um tipo diferente.
+
+Métodos públicos podem ser chamados por qualquer objeto.
+
+
+
+% ----------------------------------------------------------
+% Slide 87 (Slide168)
+
+\section{Atributos}
+
+Fora os métodos, tudo mais que está definido em uma classe são atributos.
+
+Para acessar ou definir um atributo, basta usá-lo diretamente.
+
+class Figura(object):
+	x = 0
+	y = 0
+
+
+Na verdade, até mesmo os métodos de uma classe são atributos
+
+% ----------------------------------------------------------
+% Slide 88 (Slide169)
+
+\section{Atributos}
+
+Para acessar o atributo do objeto a partir de seu método, utilize o objeto passado como primeiro argumento do método como prefixo:
+
+class HelloSpeaker(object):
+	def say_hello(self):
+		self.message = "Hello World"
+		print self.message
+
+
+
+% ----------------------------------------------------------
+% Slide 89 (Slide170)
+
+\section{Tipos de atributo}
+
+class HelloSpeaker(object):
+		message = "Hello World"
+		def say_hello(self):
+			print self.message
+
+Existem atributos de classe e de instância. Os de classe são aqueles declarados na definição da classe:
+
+E os atributos de instância são declarados numa instância da classe:
+
+class HelloSpeaker(object):
+	def say_hello(self):
+		self.message = "Hello World"
+		print self.message
+
+
+
+% ----------------------------------------------------------
+% Slide 90 (Slide171)
+
+\section{Tipos de atributo}
+
+A diferença entre atributos de classe e instância decorre do fato do último ter prioridade ante o primeiro.
+
+Logo, criar um atributo de instância com o mesmo nome de um atributo de classe fará com que o atributo de instância seja utilizado ao invés do de classe.
+
+
+
+
+Atributos de classe podem ser usados para, por exemplo, prover valores default para atributos de instância:
+
+class Foo(object):
+	attr = 1
+	def set_attr(self, arg):
+		self.attr = arg
+	def get_attr(self):
+		return self.attr
+
+a = Foo(); a.get_attr() # 1
+a = Foo(); a.set_attr(2); a.get_attr() #2
+
+% ----------------------------------------------------------
+% Slide 91 (Slide48)
+
+\section{Classes e herança}
+
+As classes em Python podem herdar as características de classes previamente existentes.
+
+class NovaClasse(object):
+	pass
+
+Sempre que uma nova classe for criada e esta não tiver nenhuma superclasse, herde da classe object.
+
+Como tudo em Python é um objeto, pode-se estender qualquer coisa, inclusive um int.
+
+
+
+% ----------------------------------------------------------
+% Slide 92 (Slide49)
+
+\section{Classes e herança}
+
+Existem objetos mutáveis e imutáveis. Talvez fosse desejável alterar o valor dos objetos imutáveis, mas como?
+
+A primeira vista é contraditório querer isto mas não é a questão. Quando instanciada uma classe, os seguintes métodos são executados: __new__ e __init__.
+
+
+
+% ----------------------------------------------------------
+% Slide 93 (Slide50)
+
+\section{Classes e herança}
+
+Mas qual a diferença entre estes dois métodos?
+
+__new__ é um método estático, trata-se do primeiro método chamado quando criando uma instância da classe. Ele tem de retornar um objeto
+
+__init__ é um método da instância da classe.
+
+Ou seja, a diferença é que o __new__ cria efetivamente o objeto e __init__ é o construtor do objeto
+
+
+
+% ----------------------------------------------------------
+% Slide 94 (Slide51)
+
+\section{Classe e herança}
+
+Isto permite, por exemplo, criar uma classe que estenda uma classe imutável sem ferir regras. Por exemplo:
+
+>>> class inch(float):
+...	def __new__(cls, arg=0.0):
+...		return float.__new__(cls, arg*0.0254)
+>>> print inch(12)
+0.3048
+
+Observe que o primeiro argumento de __new__ é uma classe. Isto é obrigatório!
+Recomenda-se executar o __new__ da superclasse.
+
+
+
+% ----------------------------------------------------------
+% Slide 95 (Slide52)
+
+\section{Classe e herança - Inicialização}
+
+O que impede de usar o __init__ em classes imutáveis para alcançar o mesmo efeito?
+
+Classes imutáveis não possuem um __init__ (ou melhor, o __init__ deles é um noop). Tecnicamente você poderia usar ele para mostrar algum dado mas não seria possível alterar o valor do objeto em si.
+
+>>> class inch2(float):
+	def __init__(self, arg=0.0):
+		print "teste - float criado eh %d" % arg
+
+		
+>>> inch2( 3 )
+teste - float criado eh 3
+3.0
+
+
+
+% ----------------------------------------------------------
+% Slide 96 (Slide53)
+
+\section{Classe e herança - Inicialização}
+
+Lembrem-se: um objeto imutável pode reutilizar referências para um objeto com o mesmo valor. Chamar o __init__ reinicializaria o valor do objeto, afetando todos os lugares que o referenciam.
+
+Mas, ainda assim, supondo que o __init__ pudesse alterar o valor, por que ainda seria desaconselhável usá-lo?
+
+
+
+% ----------------------------------------------------------
+% Slide 97 (Slide90)
+
+\section{Herança Múltipla}
+
+Suponha que uma classe D tenha as classes B e C como superclasse. Estas duas classes, por sua vez, são superclasse de uma classe A.
+
+A classe D executa o método dummy(). Este método está presente em A e C, mas não B. Qual método executar?
+
+
+
+% ----------------------------------------------------------
+% Slide 98 (Slide91)
+
+\section{Herança Múltipla - Regra do Diamante}
+
+A regra para resolver esta questão consiste em:
+
+Listar todas as superclasses, em profundidade, da esquerda para direita.
+Por exemplo, retomemos as nossas classes A,B,C e D. Elas são criadas através de:
+
+class D(B,C):...
+class B(A):...
+class C(A):...
+
+
+
+% ----------------------------------------------------------
+% Slide 99 (Slide92)
+
+\section{Herança Múltipla - Regra do Diamante}
+
+Percorrendo da esquerda pra direita e em profundidade, temos como percurso: D, B, A, C, A.
+
+
+
+
+% ----------------------------------------------------------
+% Slide 100 (Slide93)
+
+\section{Herança Múltipla - Regra do Diamante}
+
+Procurar por classes duplicadas na lista gerada. As que forem encontradas devem ser removidas com exceção da última.
+
+Lista original: [ D, B, A, C, A ]
+Elementos duplicados: [A]
+Lista final: [ D, B, C, A ]
+
+Por exemplo:
+
+
+
+% ----------------------------------------------------------
+% Slide 101 (Slide94)
+
+\section{Herança Múltipla}
+
+Então o método a ser utilizado será o da primeira classe da lista que o tiver.
+
+Por exemplo, se C e A possuem o método dummy(), então será executado o da classe C.
+
+
+
+% ----------------------------------------------------------
+% Slide 102 (Slide95)
+
+\section{Herança múltipla}
+
+Observe que o interessante quando reimplementando um método presente na superclasse é chamar o método da superclasse.
+
+Isto é feito através do comando super(). Por exemplo:
+
+class C(A):
+	def dummy(self):
+		super(C, self).dummy()
+
+
+Explicar melhor o super()
+
+% ----------------------------------------------------------
+% Slide 103 (Slide172)
+
+\section{Sobrecarga de operadores}
+
+Utilizando a função dir(), é possível ver os métodos que cada objeto possui.
+
+Muitos destes métodos são privados (com __ como prefixo e sufixo). E a grande maioria são, na verdade, os operadores + (__add__), - (__sub__), ...
+
+A sobrecarga de operadores consiste em redefinir estes métodos então.
+
+
+
+% ----------------------------------------------------------
+% Slide 104 (Slide180)
+
+\section{Sobrecarga de operadores}
+
+
+Exemplo:
+
+
+
+% ----------------------------------------------------------
+% Slide 105 (Slide179)
+
+\section{Sobrecarga de operadores}
+
+class SuperInt(object):
+	def __add__( self, other ):
+		return 1
+
+
+
+% ----------------------------------------------------------
+% Slide 106 (Slide96)
+
+\section{Acesso a atributos}
+
+Existem quatro formas para acessar atributos de um objeto:
+
+Diretamente através de <objeto>.atributo (como tinhamos feito até o momento).
+Por meio do __getattr__
+Usando o __getattribute___
+Por meio de propriedades
+
+
+
+% ----------------------------------------------------------
+% Slide 107 (Slide173)
+
+\section{__getattr__ e companhia}
+
+Os atributos podem ser acessados através dos métodos __getattr__, __setattr__ e __delattr__.
+
+O __getattr_ é utilizado apenas quando o acesso direto (<objeto>.<atributo> falha.
+
+>>> class Teste(object):
+...	def __getattr__(self, name):
+...		return 1
+
+>>> a = Teste()
+>>> print a.algumatributo
+1
+
+
+
+% ----------------------------------------------------------
+% Slide 108 (Slide176)
+
+\section{__setattr__}
+
+O __setattr_ é utilizado sempre nas atribuições.
+
+>>> class Teste(object):
+...	def __setattr__(self, name, value):
+...		self.__dict__[name] = value
+
+>>> a = Teste()
+>>> a.algumatributo = 1
+>>> print a.algumatributo
+
+
+Observe que não é possível fazer self.name = value. Isto causaria um loop infinito. Por isto a alteração deve ser feita diretamente no espaço de nomes do objeto.
+
+
+
+% ----------------------------------------------------------
+% Slide 109 (Slide175)
+
+\section{__getattribute__}
+
+O __getattribute__ tem uma grande diferença com o __getattr__: ele é sempre executado nas operações de uso do atributo.
+
+>>> class Teste(object):
+...	algumatributo = 3
+...	def __getattribute__(self, name):
+...		return 1
+
+>>> a = Teste()
+>>> print a.algumatributo
+1
+
+
+Observe: não existe __setattribute__!
+
+% ----------------------------------------------------------
+% Slide 110 (Slide97)
+
+\section{Propriedades}
+
+Uma propriedade é um tipo que agrupa três funções: get, set e delete, além de uma docstring.
+
+class C(object):
+	def get_size(self):
+		return 1 + i
+	def set_size(self):
+		return 1 - i
+	def delete_size(self):
+		pass
+	size = property(get_size, set_size, None, "Nada Util")
+
+
+
+% ----------------------------------------------------------
+% Slide 111 (Slide98)
+
+\section{Slots}
+
+Talvez seja interessante restringir que atributos você quer permitir em uma classe.
+
+Isto é possível através de slots:
+
+slots_statement ::= "__slots__" "=" "(" (identificador)* ")"
+
+
+
+% ----------------------------------------------------------
+% Slide 112 (Slide99)
+
+\section{Slots}
+
+>>> class C(object):
+...	__slots__ = ("x", "y")
+
+>>> obj = C()
+>>> obj.x
+None
+>>> obj.z
+Traceback (most recent call...)
+AttributeError: 'C' object has no attribute 'z'
+
+Por exemplo:
+
+
+
+% ----------------------------------------------------------
+% Slide 113 (Slide100)
+
+\section{Slots}
+
+Se tenta-se criar um atributo que não esteja presente no slot definido na classe, uma exceção "AttributeError" é criada.
+
+
+
+% ----------------------------------------------------------
+% Slide 114 (Slide54)
+
+\section{Tratamento de exceções}
+
+Um mecanismo de notificação e tratamento de erros muito poderoso é possível com exceções.
+
+Exceções são instâncias de uma classe (descendente em algum grau de "exception") que provoca o desvio da execução para algum ponto que a capture e trate.
+
+E, se não for tratada em nenhum ponto, o programa é terminado e algumas informações sobre a exceção são mostrados.
+
+
+
+% ----------------------------------------------------------
+% Slide 115 (Slide55)
+
+\section{Tratamento de exceções}
+
+Mas como tratar uma exceção?
+
+Através de blocos try catch ou try finally:
+
+
+try_stmt 	 ::= try_exc_stmt | try_fin_stmt
+try_exc_stmt ::= "try" ":" suite ( "except" expressão
+ 		     ["," target ] ] ":" suite )+
+		     [ "else" ":" suite]
+try_fin_stmt ::= "try" ":" suite "finally" ":" suite
+
+
+
+% ----------------------------------------------------------
+% Slide 116 (Slide56)
+
+\section{Tratamento de exceções}
+
+Por exemplo:
+
+try:
+	try:
+		1.0 + "a"
+	except TypeError:
+		print "not found"
+	else:
+		print "found"
+finally:
+	print "end"
+
+
+
+% ----------------------------------------------------------
+% Slide 117 (Slide57)
+
+\section{Tratamento de exceções}
+
+Mas, afinal, como que funciona isto?
+
+O código entre o "try" e o "finally" ou "except" pode provocar o lançamento de alguma exceção. Caso isto ocorra, o código é desviado para o except correspondente a exceção em questão.
+
+Se o "except" não especificar um tipo em especial, ele capturará qualquer tipo de exceção. Após o tratamento, ele sai do bloco de tratamento de exceção (ou seja, ele não volta ao início do try).
+
+
+
+% ----------------------------------------------------------
+% Slide 118 (Slide58)
+
+\section{Tratamento de exceções}
+
+No caso do finally, ele sempre é executado. Se ocorrer uma exceção durante a execução do bloco, o finally é executado e então a exceção é gerada novamente (ficando então a cargo de um try...except que encapsula o try...finally tratar da exceção).
+
+Caso nenhuma exceção seja lançada, o finally é executado também mas a execução continua no comando subsequente ao bloco de tratamento de exceção.
+
+
+
+% ----------------------------------------------------------
+% Slide 119 (Slide85)
+
+\section{Tratamento de exceções}
+
+E o else, opcionalmente presente em cada bloco de tratamento de exceções, é executado sempre que uma exceção não é capturada.
+
+
+
+% ----------------------------------------------------------
+% Slide 120 (Slide165)
+
+\section{Criação de uma exceção}
+
+Em um novo tipo, talvez seja desejável utilizar uma exceção com alguma capacidade extra.
+
+Para criar uma nova exceção, basta definir uma classe que herde Exception.
+
+E para lançar uma exceção deste tipo, utilize o comando raise.
+
+class MyException(Exception):
+	pass
+
+raise MyException
+
+
+
+% ----------------------------------------------------------
+% Slide 121 (Slide89)
+
+\section{Containers}
+
+Containers são objetos que contém outros objetos. Por exemplo, listas e dicionários.
+
+
+
+
+
+% ----------------------------------------------------------
+% Slide 122 (Slide144)
+
+\section{Iteradores}
+
+O iterador é um tipo de objeto criado para facilitar o percorrimento de containers.
+
+Para obter o iterador de um container, utilize o método __iter__ deste último.
+
+E o iterador, em si, deve possuir os métodos:
+ __iter__(): Retorna o iterador propriamente dito.
+ next(): Retorna o próximo item do container. Se não existir mais itens, levanta a exceção StopIteration.
+
+
+Uma vez levantada uma exceção StopIteration, um iterador deve sempre levantar esta exceção quando chamado.
+
+% ----------------------------------------------------------
+% Slide 123 (Slide177)
+
+\section{Iterador}
+
+>>> from __future__ import generators
+>>> def sqrt(target):
+...	guess = 1.0 
+... 	while 1:
+... 		newguess = (guess**2 + target)/(2*guess)
+... 		yield guess
+... 		if newguess == guess:
+... 			return
+... 		guess = newguess
+>>> a = sqrt(67)
+>>> while 1:
+...	a.next()
+
+Exemplo politicamente não muito correto:
+
+
+
+% ----------------------------------------------------------
+% Slide 124 (Slide178)
+
+\section{Iterador - um bom exemplo}
+
+>>> class Test(object):
+...	def __init__(self,phrase):
+... 		self.phrase = phrase
+... 		self.i = -1
+...	def __iter__(self):
+...		return self 
+...	def next(self):
+... 		self.i += 1
+... 		if self.i>len(self.phrase)-1:
+... 			raise StopIteration
+... 		return self.phrase[self.i]
+>>> a = Test( "Here we go" )
+>>> while 1:
+		a.next()
+
+
+
+% ----------------------------------------------------------
+% Slide 125 (Slide71)
+
+\section{Módulos}
+
+A fim de facilitar a organização dos programas, é possível distribuir seu conteúdo como um módulo.
+
+Além da vantagem de uma melhor organização, existem o fato de variáveis "globais" do módulo.
+
+
+
+% ----------------------------------------------------------
+% Slide 126 (Slide72)
+
+\section{Como criar um módulo}
+
+Criar um módulo é tecnicamente simples. Basta salvar o código em um arquivo com extensão "py"
+
+E, para usar o módulo, é suficiente usar o comando "import" seguido do nome do arquivo com o código. Por exemplo:
+
+import helloworld
+
+
+
+% ----------------------------------------------------------
+% Slide 127 (Slide73)
+
+\section{Como usar um módulo}
+
+Uma vez importado o módulo previamente descrita, para utilizar um objeto nele declarado basta usar o nome do módulo como prefixo. Por exemplo:
+
+import HelloWorlds
+
+print HelloWorlds.SimpleHelloWorld
+
+
+
+% ----------------------------------------------------------
+% Slide 128 (Slide74)
+
+\section{Maneiras alternativas para usar um módulo}
+
+Talvez, para um objeto constantemente utilizado, fique maçante usar o nome do módulo como prefixo sempre. Existem duas alternativas:
+
+import HelloWorlds as HW
+from HelloWorld import *
+
+O primeiro comando permite usar HW ao invés de HelloWords como prefixo.
+O segundo comando torna desnecessário usar o prefixo.
+
+Alguém tem idéias de como isto é feito?
+
+
+
+% ----------------------------------------------------------
+% Slide 129 (Slide75)
+
+\section{Módulos e Espaços de Nome}
+
+Um módulo tem um espaço de nome próprio.
+
+Opcionalmente, quando importando o módulo, podemos fazer com que este espaço de nomes seja acrescentado ao espaço de nomes global.
+
+Ou então mudar o nome que identifica o espaço de nome.
+
+
+
+% ----------------------------------------------------------
+% Slide 130 (Slide76)
+
+\section{Mais alguns detalhes}
+
+Os módulos não precisam necessariamente estar no diretório atual do usuário.
+
+Na verdade o interpretador procura em uma lista de diretórios.
+
+O objeto sys.path contém a lista de diretórios.
+
+
+
+% ----------------------------------------------------------
+% Slide 131 (Slide77)
+
+\section{Módulos são somente um arquivo?}
+
+Não necessariamente. Um módulo pode ser:
+
+ um arquivo em Python (.py)
+ extensões C ou C++
+ pacotes contendo uma coleção de módulos
+ módulos do próprio Python (built-in, estaticamente ligados ao interpretador)
+
+
+
+% ----------------------------------------------------------
+% Slide 132 (Slide78)
+
+\section{E mais alguns detalhes...}
+
+E se tivermos módulos destes vários tipos mas mesmos nomes, como resolver?
+
+A seguinte ordem é obedecida quando procurando um módulo em cada diretório de busca:
+Um diretório (pacote).
+Um arquivo com o sufixo .so, module.so, module.sl ou module.dll (extensões).
+Um arquivo com o sufixo .pyo.
+Um arquivo com o sufixo .pyc.
+Um arquivo com o sufixo .py.
+
+
+
+
+% ----------------------------------------------------------
+% Slide 133 (Slide79)
+
+\section{Pacotes}
+
+São coleções de módulos agrupados.
+
+Vantagem: permite resolver conflitos de nome entre módulos de diferentes aplicações
+
+
+
+
+% ----------------------------------------------------------
+% Slide 134 (Slide80)
+
+\section{Como criar um pacote}
+
+Crie um diretório o nome do pacote.
+Crie um arquivo chamado "__init__.py" neste diretório
+
+Quanto um pacote é carregado, este arquivo é executado automaticamente (mas ele pode estar vazio, sem problemas)
+
+
+
+% ----------------------------------------------------------
+% Slide 135 (Slide81)
+
+\section{Como usar um pacote}
+
+A utilização é parecida com um módulo. Basta acrescentar o nome do pacote como prefixo do nome do módulo. Por exemplo:
+
+# Carrega o módulo HighPerformance do pacote HelloWorld
+import HelloWorld.HighPerformance
+
+
+As formas alternativas de importação (vistas nos módulos) também se aplicam em pacotes
+
+
+
+% ----------------------------------------------------------
+% Slide 136 (Slide114)
+
+\section{Assert}
+
+O comando "assert" permite avaliar uma expressão em tempo de execução e, se seu valor for falso, mostrar um aviso e interromper a execução.
+
+assert_statement ::= "assert" expressão [, data ]
+
+Ele é utilizado para verificar coisas que, teoricamente, seriam impossíveis de ocorrer (mas como ninguém é perfeito...).
+
+
+
+% ----------------------------------------------------------
+% Slide 137 (Slide115)
+
+\section{Assert}
+
+Veja o exemplo abaixo:
+
+>>> a = "abc"
+>>> assert a == "abcd", "Erro!"
+Traceback (most recent call last):
+  File "<pyshell#2>", line 1, in ?
+    assert a == "abcd", "Erro!"
+AssertionError: Erro!
+
+Como poder notado, o que o "assert" faz caso a expressão seja falsa é levantar uma exceção do tipo "AssertionError".
+
+
+O comando "assert" é transformado no seguinte código:
+
+if __debug__:
+	if not ( <expressão> )
+		rase AssertionError, <dados>
+
+E o objeto __debug__ é uma variável interna, somente leitura, que possui valor "1" a menos que o interpretador esteja sendo executado no modo otimizado (opção -O). O __debug__, na verdade, pode ser usado para qualquer parte do código, não apenas no "assert".
+
+% ----------------------------------------------------------
+% Slide 138 (Slide174)
+
+\section{Comandos úteis}
+
+isinstance( objeto, classe) - Verifica se o objeto é uma instância da classe especificada.
+
+hasattr( objeto, "nome atributo") - Verifica se o objeto possui o atributo especificado.
+
+
+
+% ----------------------------------------------------------
+% Slide 139 (Slide122)
+
+\section{Referências}
+
+
+
+
+% ----------------------------------------------------------
+% Slide 140 (Slide124)
+
+\section{Maiores informações...}
+
+\subsection{Marco Aurélio Graciotto Silva
+magsilva@icmc.usp.br}
+
+
+\end{document} 
